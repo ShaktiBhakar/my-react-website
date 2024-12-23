@@ -30,9 +30,9 @@ const App = () => {
               {user.name.first} {user.name.last}
             </h2>
             <p>{user.email}</p>
-            <p>{user.location.city}, {user.location.country}</p>
+            <p>{user.location.street.number} {user.location.street.name}, {user.location.city}, {user.location.country}</p>
           </li>
-        ))}
+        ))}                                 
       </ul>
     </div>
   );
