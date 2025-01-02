@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useEffect, useState } from "react";
 
 const App = () => {
@@ -9,9 +8,9 @@ const App = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("https://randomuser.me/api/?results=100"); // API to fetch random users
+        const response = await fetch("https://randomuser.me/api/?results=10");
         const data = await response.json();
-        setUsers(data.results); // Save user data to state (RandomUser.me wraps users inside 'results')
+        setUsers(data.results); // Save user data to state
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -27,12 +26,19 @@ const App = () => {
         {users.map((user) => (
           <li key={user.login.uuid} style={{ marginBottom: "20px" }}>
             <h2 style={{ marginBottom: "5px" }}>
-              {user.name.first} {user.name.last}
+              <a
+                href={`/user/${user.id.value || user.login.uuid}`} 
+                style={{ textDecoration: "underline", color: "grey" }}
+              >
+                {user.name.first} {user.name.last}
+              </a>
             </h2>
             <p>{user.email}</p>
-            <p>{user.location.street.number} {user.location.street.name}, {user.location.city}, {user.location.country}</p>
+            <p>
+              {user.location.city}, {user.location.country}
+            </p>
           </li>
-        ))}                                 
+        ))}
       </ul>
     </div>
   );
