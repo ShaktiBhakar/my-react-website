@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from "react";
 
 const App = () => {
-  // State to store user data
-  const [users, setUsers] = useState([]);
+  // State to store posts
+  const [posts, setPosts] = useState([]);
 
-  // Fetch data from RandomUser.me API
+  // Fetch data from JSONPlaceholder
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchPosts = async () => {
       try {
-        const response = await fetch("https://randomuser.me/api/?results=10");
+        // Updated to fetch posts from JSONPlaceholder
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts");
         const data = await response.json();
-        setUsers(data.results); // Save user data to state
+        setPosts(data); // Save posts to state
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching posts:", error);
       }
     };
 
-    fetchUsers();
+    fetchPosts();
   }, []);
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Users</h1>
+      <h1>Posts</h1>
       <ul style={{ listStyleType: "none", padding: 0 }}>
-        {users.map((user) => (
-          <li key={user.login.uuid} style={{ marginBottom: "20px" }}>
-            <h2 style={{ marginBottom: "5px" }}>
-              <a
-                href={`/user/${user.id.value || user.login.uuid}`} 
-                style={{ textDecoration: "underline", color: "grey" }}
-              >
-                {user.name.first} {user.name.last}
-              </a>
-            </h2>
-            <p>{user.email}</p>
-            <p>
-              {user.location.city}, {user.location.country}
-            </p>
+        {posts.map((post) => (
+          <li key={post.id} style={{ marginBottom: "20px" }}>
+            <h2 style={{ marginBottom: "5px" }}>{post.title}</h2>
+            <p>{post.body}</p>
           </li>
         ))}
       </ul>
